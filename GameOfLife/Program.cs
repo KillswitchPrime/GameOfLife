@@ -1,2 +1,9 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using GameOfLife;
+
+static void Step()
+{
+    var grid = new Grid();
+    Console.WriteLine(grid.Cells.Count);
+}
+
+Step();

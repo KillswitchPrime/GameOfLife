@@ -2,11 +2,23 @@
 {
     internal class Grid
     {
-        internal Grid(Cell[][] board)
-        {
-            Board = board;
-        }
+       internal Grid(int row = 100)
+       {
+            Cells = new List<Cell>();
 
-        internal Cell[][] Board { get; set; }
+            var size = Math.Pow(row, 2);
+
+            for (int i = 0; i < size; i++)
+            {
+                Cells.Add(new Cell());
+            }
+
+            for(int i = 0; i < size; ++i)
+            {
+                var currentCell = Cells[i];
+            }
+       }
+
+       internal List<Cell> Cells { get; set; }
     }
 }
