@@ -8,9 +8,15 @@
 
             var size = row * row;
 
+            var random = new Random();
+
             for (int i = 0; i < size; i++)
             {
-                Cells.Add(new Cell(index: i));
+                var chanceToLive = random.Next(0, 101);
+
+                var isAlive = chanceToLive <= startAlive;
+
+                Cells.Add(new Cell(isAlive: isAlive, index: i));
             }
 
             for(int i = 0; i < size; ++i)
