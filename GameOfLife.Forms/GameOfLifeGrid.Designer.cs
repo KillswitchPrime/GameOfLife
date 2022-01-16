@@ -34,7 +34,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1920, 1080);
+            this.ClientSize = new System.Drawing.Size(1200, 1200);
             this.Name = "GameOfLifeGrid";
             this.Text = "Game of Life";
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.GameOfLifeGrid_Paint);

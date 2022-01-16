@@ -1,6 +1,6 @@
 ﻿namespace GameOfLife.Core
 {
-    internal class Cell
+    public class Cell
     {
         internal Cell(bool isAlive = false, int livingNeighbours = 0, int index = 0)
         {
@@ -21,12 +21,12 @@
             Index = index;
         }
 
-        internal bool IsAlive { get; set; }
+        public bool IsAlive { get; set; }
         internal int LivingNeighbours { get; set; }
         internal Dictionary<CellEnum, Cell?> Neighbours { get; set; }
-        internal int Index { get; set; }
+        public int Index { get; set; }
 
-        internal void UpdateStatus()
+        public void UpdateStatus()
         {
             var numberOfLivingNeighbours = 0;
 
@@ -38,21 +38,18 @@
                 }
             }
 
-            var isAlive = numberOfLivingNeighbours switch
+            if(numberOfLivingNeighbours == 0 || numberOfLivingNeighbours == 1)
             {
-                // Equal to 0 or 1
-                >= 0 and <= 1 => false,
+                IsAlive = false;
+            }
+            else if (numberOfLivingNeighbours == 2 || numberOfLivingNeighbours == 3)
+            {
+                IsAlive = true;
+            }
+            else if(numberOfLivingNeighbours >= 4){
+                IsAlive = false;
+            }
 
-                // Equal to 2 or 3
-                >= 2 and <= 3 => true,
-
-                // Greater than 4
-                >= 4 => false,
-
-                _ => false,
-            };
-
-            IsAlive = isAlive;
             LivingNeighbours = numberOfLivingNeighbours;
         }
     }

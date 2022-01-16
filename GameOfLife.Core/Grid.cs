@@ -1,8 +1,8 @@
 ﻿namespace GameOfLife.Core
 {
-    internal class Grid
+    public class Grid
     {
-       internal Grid(int row = 100, int startAlive = 10)
+       public Grid(int row = 100, int startAlive = 10)
        {
             Cells = new List<Cell>();
 
@@ -125,6 +125,6 @@
             }
        }
 
-       internal List<Cell> Cells { get; set; }
+       public List<Cell> Cells { get; set; }
     }
 }
