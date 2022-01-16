@@ -3,7 +3,13 @@
 static void Step()
 {
     var grid = new Grid();
-    Console.WriteLine(grid.Cells.Count);
+
+    var firstCell = grid.Cells.FirstOrDefault();
+
+    foreach(var neighbour in firstCell.Neighbours.Values)
+    {
+        Console.WriteLine(neighbour.Index);
+    }
 }
 
 Step();
