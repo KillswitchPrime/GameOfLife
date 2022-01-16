@@ -2,56 +2,40 @@
 {
     internal class Cell
     {
+        internal Cell(bool isAlive = false, int livingNeighbours = 0, int index = 0)
+        {
+            Neighbours = new Dictionary<CellEnum, Cell?>
+            {
+                {CellEnum.NorthWest, null},
+                {CellEnum.North, null},
+                {CellEnum.NorthEast, null},
+                {CellEnum.West, null},
+                {CellEnum.East, null},
+                {CellEnum.SouthWest, null},
+                {CellEnum.South, null},
+                {CellEnum.SouthEast, null},
+            };
+
+            IsAlive = isAlive;
+            LivingNeighbours = livingNeighbours;
+            Index = index;
+        }
+
         internal bool IsAlive { get; set; }
-        internal int Neighbours { get; set; } // Living
-
-        // Neighbouring cells
-        internal Cell TopLeft { get; set; }
-        internal Cell Top { get; set; }
-        internal Cell TopRight { get; set; }
-
-        internal Cell Left { get; set; }
-        internal Cell Right { get; set; }
-
-        internal Cell BottomLeft { get; set; }
-        internal Cell Bottom { get; set; }
-        internal Cell BottomRight { get; set; }
+        internal int LivingNeighbours { get; set; }
+        internal Dictionary<CellEnum, Cell?> Neighbours { get; set; }
+        internal int Index { get; set; }
 
         internal void UpdateStatus()
         {
             var numberOfLivingNeighbours = 0;
 
-            if (TopLeft.IsAlive)
+            foreach(var cell in Neighbours.Values)
             {
-                numberOfLivingNeighbours++;
-            }
-            if (Top.IsAlive)
-            {
-                numberOfLivingNeighbours++;
-            }
-            if (TopRight.IsAlive)
-            {
-                numberOfLivingNeighbours++;
-            }
-            if (Left.IsAlive)
-            {
-                numberOfLivingNeighbours++;
-            }
-            if (Right.IsAlive)
-            {
-                numberOfLivingNeighbours++;
-            }
-            if (BottomLeft.IsAlive)
-            {
-                numberOfLivingNeighbours++;
-            }
-            if (Bottom.IsAlive)
-            {
-                numberOfLivingNeighbours++;
-            }
-            if (BottomRight.IsAlive)
-            {
-                numberOfLivingNeighbours++;
+                if (cell.IsAlive)
+                {
+                    numberOfLivingNeighbours++;
+                }
             }
 
             var isAlive = numberOfLivingNeighbours switch
@@ -69,7 +53,7 @@
             };
 
             IsAlive = isAlive;
-            Neighbours = numberOfLivingNeighbours;
+            LivingNeighbours = numberOfLivingNeighbours;
         }
     }
 }
