@@ -1,15 +1,16 @@
 ﻿using GameOfLife;
+using System.Drawing;
+
+var grid = new Grid();
+
+static void DrawGrid(object sender, PaintEventArgs e)
+{
+    Graphics g = e.Graphics;
+}
 
 static void Step()
 {
-    var grid = new Grid();
 
-    var firstCell = grid.Cells.FirstOrDefault(c => c.Index == 9999);
-
-    foreach(var neighbour in firstCell.Neighbours.Values)
-    {
-        Console.WriteLine(neighbour.Index);
-    }
 }
 
 Step();

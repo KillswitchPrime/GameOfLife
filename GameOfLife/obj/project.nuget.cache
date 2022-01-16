@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "/1v4DwhMWsAXaIsC+SB4vZ6jOF1VTzO80UhtofWd+Wi8mEywv000e6d76g4EbEHGOAn9ItIdGy3hRc85V5BY7Q==",
+  "dgSpecHash": "0I0YTcQU+Nagbi7I3wniNEGeWiC/0TxbzLTowOtbX1MlEYFDa2+TZnY9a+Uxb6hBm9k/em3bqiyJXo96J8OhoA==",
   "success": true,
   "projectFilePath": "C:\\Users\\flip_\\source\\repos\\GameOfLife\\GameOfLife\\GameOfLife.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\flip_\\.nuget\\packages\\microsoft.win32.systemevents\\6.0.0\\microsoft.win32.systemevents.6.0.0.nupkg.sha512",
+    "C:\\Users\\flip_\\.nuget\\packages\\system.drawing.common\\6.0.0\\system.drawing.common.6.0.0.nupkg.sha512"
+  ],
   "logs": []
 }
