@@ -15,10 +15,10 @@ namespace GameOfLife.Forms
             {
                 graphics.Clear(Color.Gray);
 
-                var rowSize = 100;
+                var rowSize = 3;
                 var cellSize = Height / rowSize;
 
-                var grid = new Grid(row: rowSize, startAlive: 5);
+                var grid = new Grid(row: rowSize, startAlive: 20);
 
                 for(int i = 0; i < rowSize; i++)
                 {
@@ -37,30 +37,23 @@ namespace GameOfLife.Forms
             var x = 0;
             var y = 0;
 
-            var gridCopy = grid;
-
             foreach(var cell in grid.Cells)
             {
-                if (cell.IsAlive)
-                {
-                    graphics.FillRectangle(Brushes.Gold, new Rectangle(x + 1, y + 1, cellSize - 1, cellSize - 1));
-                }
-                else
-                {
-                    graphics.FillRectangle(Brushes.Gray, new Rectangle(x + 1, y + 1, cellSize - 1, cellSize - 1));
-                }
-
-                gridCopy.Cells.FirstOrDefault(c => c.Index == cell.Index).UpdateStatus();
-
+                var brush = cell.IsAlive ? Brushes.Gold : Brushes.Gray;
+                
+                graphics.FillRectangle(brush, new Rectangle(x + 1, y + 1, cellSize - 1, cellSize - 1));
+                
                 x += cellSize;
                 if(x >= (rowSize * cellSize))
                 {
                     x = 0;
                     y += cellSize;
                 }
+
+                cell.UpdateStatus();
             }
 
-            Step(gridCopy, cellSize, rowSize, graphics);
+            Step(grid, cellSize, rowSize, graphics);
         }
     }
 }

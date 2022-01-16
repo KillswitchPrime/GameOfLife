@@ -38,17 +38,16 @@
                 }
             }
 
-            if(numberOfLivingNeighbours == 0 || numberOfLivingNeighbours == 1)
+            IsAlive = numberOfLivingNeighbours switch
             {
-                IsAlive = false;
-            }
-            else if (numberOfLivingNeighbours == 2 || numberOfLivingNeighbours == 3)
-            {
-                IsAlive = true;
-            }
-            else if(numberOfLivingNeighbours >= 4){
-                IsAlive = false;
-            }
+                >= 0 and <= 1 => false,
+
+                >= 2 and <= 3 => true,
+
+                >= 4 => false,
+
+                _ => false
+            };
 
             LivingNeighbours = numberOfLivingNeighbours;
         }
