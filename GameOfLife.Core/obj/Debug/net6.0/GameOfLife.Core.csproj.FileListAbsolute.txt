@@ -1,0 +1,12 @@
+C:\Users\flip_\source\repos\GameOfLife\GameOfLife.Core\bin\Debug\net6.0\GameOfLife.Core.deps.json
+C:\Users\flip_\source\repos\GameOfLife\GameOfLife.Core\bin\Debug\net6.0\GameOfLife.Core.dll
+C:\Users\flip_\source\repos\GameOfLife\GameOfLife.Core\bin\Debug\net6.0\ref\GameOfLife.Core.dll
+C:\Users\flip_\source\repos\GameOfLife\GameOfLife.Core\bin\Debug\net6.0\GameOfLife.Core.pdb
+C:\Users\flip_\source\repos\GameOfLife\GameOfLife.Core\obj\Debug\net6.0\GameOfLife.Core.csproj.AssemblyReference.cache
+C:\Users\flip_\source\repos\GameOfLife\GameOfLife.Core\obj\Debug\net6.0\GameOfLife.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\flip_\source\repos\GameOfLife\GameOfLife.Core\obj\Debug\net6.0\GameOfLife.Core.AssemblyInfoInputs.cache
+C:\Users\flip_\source\repos\GameOfLife\GameOfLife.Core\obj\Debug\net6.0\GameOfLife.Core.AssemblyInfo.cs
+C:\Users\flip_\source\repos\GameOfLife\GameOfLife.Core\obj\Debug\net6.0\GameOfLife.Core.csproj.CoreCompileInputs.cache
+C:\Users\flip_\source\repos\GameOfLife\GameOfLife.Core\obj\Debug\net6.0\GameOfLife.Core.dll
+C:\Users\flip_\source\repos\GameOfLife\GameOfLife.Core\obj\Debug\net6.0\ref\GameOfLife.Core.dll
+C:\Users\flip_\source\repos\GameOfLife\GameOfLife.Core\obj\Debug\net6.0\GameOfLife.Core.pdb

@@ -1,6 +1,6 @@
 ﻿namespace GameOfLife.Forms
 {
-    partial class Form1
+    partial class GameOfLifeGrid
     {
         /// <summary>
         ///  Required designer variable.
@@ -28,10 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.SuspendLayout();
+            // 
+            // GameOfLifeGrid
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "Form1";
+            this.ClientSize = new System.Drawing.Size(1920, 1080);
+            this.Name = "GameOfLifeGrid";
+            this.Text = "Game of Life";
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.GameOfLifeGrid_Paint);
+            this.ResumeLayout(false);
+
         }
 
         #endregion

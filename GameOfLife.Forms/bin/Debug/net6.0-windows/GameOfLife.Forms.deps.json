@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "GameOfLife.Forms/1.0.0": {
+        "dependencies": {
+          "GameOfLife.Core": "1.0.0"
+        },
+        "runtime": {
+          "GameOfLife.Forms.dll": {}
+        }
+      },
+      "GameOfLife.Core/1.0.0": {
+        "runtime": {
+          "GameOfLife.Core.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "GameOfLife.Forms/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "GameOfLife.Core/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
