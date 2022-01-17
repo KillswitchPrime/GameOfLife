@@ -42,11 +42,11 @@
 
             return numberOfLivingNeighbours switch
             {
-                >= 0 and <= 1 => false,
-
-                >= 2 and <= 3 => true,
-
                 >= 4 => false,
+
+                >= 2 => true,
+
+                >= 0 => false,
 
                 _ => false
             };
