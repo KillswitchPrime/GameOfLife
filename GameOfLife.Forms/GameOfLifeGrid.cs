@@ -7,53 +7,63 @@ namespace GameOfLife.Forms
         public GameOfLifeGrid()
         {
             InitializeComponent();
+            var timer = new System.Windows.Forms.Timer
+            {
+                Interval = 200 // Milliseconds
+            };
+            timer.Tick += new EventHandler(Step);
+            timer.Start();
         }
+
+        private static readonly int _rowSize = 100;
+        private static Grid _grid = new Grid(row: _rowSize, startAlive: 5);
+        private static Brush brush = Brushes.Gray;
+        private static int cellSize = 0;
+
+        private static int X = 0;
+        private static int Y = 0;
 
         private void GameOfLifeGrid_Paint(object sender, PaintEventArgs e)
         {
-            using (var graphics = e.Graphics)
+            using var graphics = e.Graphics;
+            graphics.Clear(Color.Gray);
+
+            cellSize = Height / _rowSize;
+
+            for (int i = 0; i < _rowSize; i++)
             {
-                graphics.Clear(Color.Gray);
+                var currentPoint = i * cellSize;
 
-                var rowSize = 3;
-                var cellSize = Height / rowSize;
-
-                var grid = new Grid(row: rowSize, startAlive: 20);
-
-                for(int i = 0; i < rowSize; i++)
-                {
-                    var currentPoint = i * cellSize;
-
-                    graphics.DrawLine(Pens.Black, new Point(currentPoint, 0), new Point(currentPoint, Height));
-                    graphics.DrawLine(Pens.Black, new Point(0, currentPoint), new Point(Width, currentPoint));
-                }
-
-                Step(grid, cellSize, rowSize, graphics);
-            };
+                graphics.DrawLine(Pens.Black, new Point(currentPoint, 0), new Point(currentPoint, Height));
+                graphics.DrawLine(Pens.Black, new Point(0, currentPoint), new Point(Width, currentPoint));
+            }
         }
 
-        private void Step(Grid grid, int cellSize, int rowSize, Graphics graphics)
+        private void Step(object sender, EventArgs e)
         {
-            var x = 0;
-            var y = 0;
+            var graphics = CreateGraphics();
 
-            foreach(var cell in grid.Cells)
+            var gridCopy = _grid;
+
+            foreach (var cell in _grid.Cells)
             {
-                var brush = cell.IsAlive ? Brushes.Gold : Brushes.Gray;
-                
-                graphics.FillRectangle(brush, new Rectangle(x + 1, y + 1, cellSize - 1, cellSize - 1));
-                
-                x += cellSize;
-                if(x >= (rowSize * cellSize))
+                brush = cell.IsAlive ? Brushes.Gold : Brushes.Gray;
+
+                graphics.FillRectangle(brush, new Rectangle(X + 1, Y + 1, cellSize - 1, cellSize - 1));
+
+                X += cellSize;
+                if (X >= (_rowSize * cellSize))
                 {
-                    x = 0;
-                    y += cellSize;
+                    X = 0;
+                    Y += cellSize;
                 }
 
-                cell.UpdateStatus();
+                gridCopy.Cells[cell.Index].IsAlive = cell.UpdateStatus();
             }
 
-            Step(grid, cellSize, rowSize, graphics);
+            X = 0;
+            Y = 0;
+            _grid = gridCopy;
         }
     }
 }

@@ -26,7 +26,7 @@
         internal Dictionary<CellEnum, Cell?> Neighbours { get; set; }
         public int Index { get; set; }
 
-        public void UpdateStatus()
+        public bool UpdateStatus()
         {
             var numberOfLivingNeighbours = 0;
 
@@ -38,7 +38,9 @@
                 }
             }
 
-            IsAlive = numberOfLivingNeighbours switch
+            LivingNeighbours = numberOfLivingNeighbours;
+
+            return numberOfLivingNeighbours switch
             {
                 >= 0 and <= 1 => false,
 
@@ -48,8 +50,6 @@
 
                 _ => false
             };
-
-            LivingNeighbours = numberOfLivingNeighbours;
         }
     }
 }
