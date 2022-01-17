@@ -22,7 +22,8 @@ namespace GameOfLife.Test
             cells.FirstOrDefault(c => c.Index == 1).IsAlive = true;
             cells.FirstOrDefault(c => c.Index == 2).IsAlive = true;
 
-            cells.FirstOrDefault(c => c.Index == 4).IsAlive = cells.FirstOrDefault(c => c.Index == 4).UpdateStatus();
+            cells.FirstOrDefault(c => c.Index == 4).CheckNextStepStatus();
+            cells.FirstOrDefault(c => c.Index == 4).UpdateStatus();
 
             Assert.True(cells.FirstOrDefault(c => c.Index == 4).IsAlive);
         }
@@ -46,13 +47,15 @@ namespace GameOfLife.Test
             cells.FirstOrDefault(c => c.Index == 7).IsAlive = true;
             cells.FirstOrDefault(c => c.Index == 8).IsAlive = true;
 
-            var cellCopy = cells;
             foreach(var cell in cells)
             {
-                cellCopy[cell.Index].IsAlive = cell.UpdateStatus();
+                cell.CheckNextStepStatus();
             }
 
-            cells = cellCopy;
+            foreach(var cell in cells)
+            {
+                cell.UpdateStatus();
+            }
 
             Assert.True(cells.All(c => c.IsAlive == false));
         }

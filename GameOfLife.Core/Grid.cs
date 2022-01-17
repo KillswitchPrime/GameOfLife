@@ -2,8 +2,8 @@
 {
     public class Grid
     {
-       public Grid(int row = 100, int startAlive = 10)
-       {
+        public Grid(int row = 100, int startAlive = 10)
+        {
             Cells = new List<Cell>();
 
             var size = row * row;
@@ -123,8 +123,16 @@
                     currentCell.Neighbours[CellEnum.SouthEast] = Cells[i + row + 1];
                 }
             }
-       }
+        }
 
-       public List<Cell> Cells { get; set; }
+        public List<Cell> Cells { get; set; }
+
+        public void UpdateCellsStatus()
+        {
+            foreach(var cell in Cells)
+            {
+                cell.UpdateStatus();
+            }
+        }
     }
 }

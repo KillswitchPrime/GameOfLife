@@ -9,14 +9,14 @@ namespace GameOfLife.Forms
             InitializeComponent();
             var timer = new System.Windows.Forms.Timer
             {
-                Interval = 200 // Milliseconds
+                Interval = 10 // Milliseconds
             };
             timer.Tick += new EventHandler(Step);
             timer.Start();
         }
 
-        private static readonly int _rowSize = 100;
-        private static Grid _grid = new Grid(row: _rowSize, startAlive: 5);
+        private static readonly int _rowSize = 50;
+        private static readonly Grid _grid = new Grid(row: _rowSize, startAlive: 10);
         private static Brush brush = Brushes.Gray;
         private static int cellSize = 0;
 
@@ -43,8 +43,6 @@ namespace GameOfLife.Forms
         {
             var graphics = CreateGraphics();
 
-            var gridCopy = _grid;
-
             foreach (var cell in _grid.Cells)
             {
                 brush = cell.IsAlive ? Brushes.Gold : Brushes.Gray;
@@ -58,12 +56,13 @@ namespace GameOfLife.Forms
                     Y += cellSize;
                 }
 
-                gridCopy.Cells[cell.Index].IsAlive = cell.UpdateStatus();
+                cell.CheckNextStepStatus();
             }
 
             X = 0;
             Y = 0;
-            _grid = gridCopy;
+
+            _grid.UpdateCellsStatus();
         }
     }
 }

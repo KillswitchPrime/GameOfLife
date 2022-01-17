@@ -22,11 +22,12 @@
         }
 
         public bool IsAlive { get; set; }
+        public bool NextStepIsAlive { get; set; }
         internal int LivingNeighbours { get; set; }
         internal Dictionary<CellEnum, Cell?> Neighbours { get; set; }
         public int Index { get; set; }
 
-        public bool UpdateStatus()
+        public void CheckNextStepStatus()
         {
             var numberOfLivingNeighbours = 0;
 
@@ -40,16 +41,28 @@
 
             LivingNeighbours = numberOfLivingNeighbours;
 
-            return numberOfLivingNeighbours switch
+            if (IsAlive)
             {
-                >= 4 => false,
+                NextStepIsAlive = numberOfLivingNeighbours switch
+                {
+                    >= 4 => false,
 
-                >= 2 => true,
+                    >= 2 => true,
 
-                >= 0 => false,
+                    >= 0 => false,
 
-                _ => false
-            };
+                    _ => false
+                };
+            }
+            else if(IsAlive == false)
+            {
+                NextStepIsAlive = numberOfLivingNeighbours == 3;
+            }
+        }
+
+        public void UpdateStatus()
+        {
+            IsAlive = NextStepIsAlive;
         }
     }
 }
