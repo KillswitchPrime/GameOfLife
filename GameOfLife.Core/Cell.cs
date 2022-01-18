@@ -19,10 +19,12 @@
             IsAlive = isAlive;
             LivingNeighbours = livingNeighbours;
             Index = index;
+            WasChanged = false;
         }
 
         public bool IsAlive { get; set; }
         public bool NextStepIsAlive { get; set; }
+        public bool WasChanged { get; set; }
         internal int LivingNeighbours { get; set; }
         internal Dictionary<CellEnum, Cell?> Neighbours { get; set; }
         public int Index { get; set; }
@@ -62,6 +64,11 @@
 
         public void UpdateStatus()
         {
+            if(IsAlive == NextStepIsAlive)
+            {
+                WasChanged = true;
+            }
+
             IsAlive = NextStepIsAlive;
         }
     }

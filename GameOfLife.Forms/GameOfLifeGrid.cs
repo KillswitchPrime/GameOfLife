@@ -15,7 +15,7 @@ namespace GameOfLife.Forms
             timer.Start();
         }
 
-        private static readonly int _rowSize = 50;
+        private static readonly int _rowSize = 100;
         private static readonly Grid _grid = new Grid(row: _rowSize, startAlive: 10);
         private static Brush brush = Brushes.Gray;
         private static int cellSize = 0;
@@ -45,9 +45,12 @@ namespace GameOfLife.Forms
 
             foreach (var cell in _grid.Cells)
             {
-                brush = cell.IsAlive ? Brushes.Gold : Brushes.Gray;
+                if (cell.WasChanged)
+                {
+                    brush = cell.IsAlive ? Brushes.Gold : Brushes.Gray;
 
-                graphics.FillRectangle(brush, new Rectangle(X + 1, Y + 1, cellSize - 1, cellSize - 1));
+                    graphics.FillRectangle(brush, new Rectangle(X + 1, Y + 1, cellSize - 1, cellSize - 1));
+                }
 
                 X += cellSize;
                 if (X >= (_rowSize * cellSize))
