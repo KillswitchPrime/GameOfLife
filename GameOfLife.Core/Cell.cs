@@ -64,7 +64,7 @@
 
         public void UpdateStatus()
         {
-            if(IsAlive == NextStepIsAlive)
+            if(IsAlive != NextStepIsAlive)
             {
                 WasChanged = true;
             }

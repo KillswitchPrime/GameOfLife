@@ -139,7 +139,7 @@
             currentCell.Neighbours[CellEnum.NorthEast] = Cells[i - row + 1];
             currentCell.Neighbours[CellEnum.West] = Cells[i - 1];
             currentCell.Neighbours[CellEnum.East] = Cells[i + 1];
-            currentCell.Neighbours[CellEnum.SouthWest] = Cells[i - (row * (row - 1)) + row - 1];
+            currentCell.Neighbours[CellEnum.SouthWest] = Cells[i - (row * (row - 1)) - 1];
             currentCell.Neighbours[CellEnum.South] = Cells[i - (row * (row - 1))];
             currentCell.Neighbours[CellEnum.SouthEast] = Cells[i - (row * (row - 1)) + 1];
         }

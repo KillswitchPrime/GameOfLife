@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "BriansBrain.Forms/1.0.0": {
+        "dependencies": {
+          "BriansBrain.Core": "1.0.0"
+        },
+        "runtime": {
+          "BriansBrain.Forms.dll": {}
+        }
+      },
+      "BriansBrain.Core/1.0.0": {
+        "runtime": {
+          "BriansBrain.Core.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "BriansBrain.Forms/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "BriansBrain.Core/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
