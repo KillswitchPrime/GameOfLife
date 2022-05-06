@@ -16,7 +16,7 @@ namespace BriansBrain.Forms
         }
 
         private static readonly int _rowSize = 60;
-        private static readonly Grid _grid = new Grid(row: _rowSize, startAlive: 80);
+        private static readonly Grid _grid = new (row: _rowSize, startAlive: 80);
         private static Brush brush = Brushes.Gray;
         private static int cellSize = 0;
 
@@ -37,6 +37,8 @@ namespace BriansBrain.Forms
                 graphics.DrawLine(Pens.Black, new Point(currentPoint, 0), new Point(currentPoint, Height));
                 graphics.DrawLine(Pens.Black, new Point(0, currentPoint), new Point(Width, currentPoint));
             }
+
+            graphics.Dispose();
         }
 
         private void Step(object sender, EventArgs e)
@@ -55,7 +57,7 @@ namespace BriansBrain.Forms
                         _ => Brushes.Gray
                     };
 
-                    graphics.FillRectangle(brush, new Rectangle(X + 1, Y + 1, cellSize - 1, cellSize - 1));
+                    graphics.FillRectangle(brush, X + 1, Y + 1, cellSize - 1, cellSize - 1);
                 }
 
                 X += cellSize;
@@ -72,6 +74,7 @@ namespace BriansBrain.Forms
             Y = 0;
 
             _grid.UpdateCellsStatus();
+            graphics.Dispose();
         }
     }
 }
