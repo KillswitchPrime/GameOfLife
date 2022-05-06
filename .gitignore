@@ -1,0 +1,7 @@
+﻿.vs
+BriansBrain.Forms/obj
+BriansBrain/obj
+GameOfLife.Core/obj
+GameOfLife.Forms/bin
+GameOfLife.Forms/obj
+GameOfLife.Test/obj
