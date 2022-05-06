@@ -33,7 +33,7 @@
         {
             var numberOfLivingNeighbours = 0;
 
-            foreach(var cell in Neighbours.Values)
+            foreach (var cell in Neighbours.Values)
             {
                 if (cell.IsAlive)
                 {
@@ -56,7 +56,7 @@
                     _ => false
                 };
             }
-            else if(IsAlive == false)
+            else if (IsAlive == false)
             {
                 NextStepIsAlive = numberOfLivingNeighbours == 3;
             }
@@ -64,7 +64,7 @@
 
         public void UpdateStatus()
         {
-            if(IsAlive != NextStepIsAlive)
+            if (IsAlive != NextStepIsAlive)
             {
                 WasChanged = true;
             }

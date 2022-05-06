@@ -9,9 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameOfLife.Core", "GameOfLi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameOfLife.Test", "GameOfLife.Test\GameOfLife.Test.csproj", "{CFE967BC-19A9-41F7-8BCD-B3EE25A6B306}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BriansBrain.Core", "BriansBrain\BriansBrain.Core.csproj", "{CF174319-EBB6-4056-9E2D-B2614D6067B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BriansBrain.Core", "BriansBrain\BriansBrain.Core.csproj", "{CF174319-EBB6-4056-9E2D-B2614D6067B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BriansBrain.Forms", "BriansBrain.Forms\BriansBrain.Forms.csproj", "{7268F8BD-2CA7-4D2A-91E5-1F3D876278FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BriansBrain.Forms", "BriansBrain.Forms\BriansBrain.Forms.csproj", "{7268F8BD-2CA7-4D2A-91E5-1F3D876278FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameOfLifeWPF", "GameOfLife.WPF\GameOfLifeWPF.csproj", "{93E306EB-012E-4CB8-AAEF-76887E4604B7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{7268F8BD-2CA7-4D2A-91E5-1F3D876278FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7268F8BD-2CA7-4D2A-91E5-1F3D876278FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7268F8BD-2CA7-4D2A-91E5-1F3D876278FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93E306EB-012E-4CB8-AAEF-76887E4604B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93E306EB-012E-4CB8-AAEF-76887E4604B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93E306EB-012E-4CB8-AAEF-76887E4604B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93E306EB-012E-4CB8-AAEF-76887E4604B7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

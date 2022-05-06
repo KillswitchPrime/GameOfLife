@@ -52,7 +52,7 @@ namespace BriansBrain.Forms
                     brush = cell.IsAlive switch
                     {
                         StatusEnum.Dead => Brushes.Gray,
-                        StatusEnum.Alive => Brushes.Purple,
+                        StatusEnum.Alive => Brushes.Coral,
                         StatusEnum.Dying => Brushes.Aquamarine,
                         _ => Brushes.Gray
                     };
