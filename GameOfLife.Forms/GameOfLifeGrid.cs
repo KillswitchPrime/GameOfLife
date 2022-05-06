@@ -16,7 +16,7 @@ namespace GameOfLife.Forms
         }
 
         private static readonly int _rowSize = 100;
-        private static readonly Grid _grid = new Grid(row: _rowSize, startAlive: 10);
+        private static readonly Grid _grid = new(row: _rowSize, startAlive: 10);
         private static Brush brush = Brushes.Gray;
         private static int cellSize = 0;
 
@@ -37,6 +37,8 @@ namespace GameOfLife.Forms
                 graphics.DrawLine(Pens.Black, new Point(currentPoint, 0), new Point(currentPoint, Height));
                 graphics.DrawLine(Pens.Black, new Point(0, currentPoint), new Point(Width, currentPoint));
             }
+
+            graphics.Dispose();
         }
 
         private void Step(object sender, EventArgs e)
@@ -49,7 +51,7 @@ namespace GameOfLife.Forms
                 {
                     brush = cell.IsAlive ? Brushes.Gold : Brushes.Gray;
 
-                    graphics.FillRectangle(brush, new Rectangle(X + 1, Y + 1, cellSize - 1, cellSize - 1));
+                    graphics.FillRectangle(brush, X + 1, Y + 1, cellSize - 1, cellSize - 1);
                 }
 
                 X += cellSize;
@@ -66,6 +68,7 @@ namespace GameOfLife.Forms
             Y = 0;
 
             _grid.UpdateCellsStatus();
+            graphics.Dispose();
         }
     }
 }

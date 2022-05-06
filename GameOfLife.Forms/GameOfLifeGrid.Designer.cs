@@ -39,7 +39,6 @@
             this.Text = "Game of Life";
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.GameOfLifeGrid_Paint);
             this.ResumeLayout(false);
-
         }
 
         #endregion
