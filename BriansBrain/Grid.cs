@@ -14,7 +14,7 @@
             {
                 var chanceToLive = random.Next(0, 101);
 
-                var isAlive = chanceToLive >= startAlive ? StatusEnum.Alive : StatusEnum.Dead;
+                var isAlive = chanceToLive <= startAlive ? StatusEnum.Alive : StatusEnum.Dead;
 
                 Cells.Add(new Cell(isAlive: isAlive, index: i));
             }
