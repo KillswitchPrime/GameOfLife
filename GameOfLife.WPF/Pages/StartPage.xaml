@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:GameOfLifeWPF"
       mc:Ignorable="d" 
-      d:DesignHeight="1269" d:DesignWidth="1200"
+      d:DesignHeight="1269" d:DesignWidth="1216"
       Title="Start Page">
     <Canvas Background="Coral">
         <Button Name="StartGameOfLife" BorderBrush="Black" BorderThickness="2" Click="OnClickGameOfLife" ClickMode="Press" Width="200" Height="200" Canvas.Top="600" Canvas.Left="300" FontSize="20" FontWeight="Bold" Background="Gold">Start Game Of Life</Button>

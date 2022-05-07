@@ -18,15 +18,17 @@ namespace GameOfLifeWPF.Classes
             set
             {
                 _BrushColor = value;
-                OnPropertyChanged(nameof(BrushColor));
+                OnPropertyChanged();
             }
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        private void OnPropertyChanged(string propertyName)
+        private static readonly PropertyChangedEventArgs PropertyName = new(nameof(BrushColor));
+
+        private void OnPropertyChanged()
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, PropertyName);
         }
     }
 }

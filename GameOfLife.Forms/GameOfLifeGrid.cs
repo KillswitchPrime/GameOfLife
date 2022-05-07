@@ -41,7 +41,7 @@ namespace GameOfLife.Forms
             graphics.Dispose();
         }
 
-        private void Step(object sender, EventArgs e)
+        private void Step(object? sender, EventArgs e)
         {
             var graphics = CreateGraphics();
 

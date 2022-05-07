@@ -21,7 +21,7 @@ namespace GameOfLifeWPF.Pages
             Loaded += GameOfLifePage_Loaded;
         }
 
-        private static readonly int _rowSize = 200;
+        private static readonly int _rowSize = 100;
         private static readonly BriansBrain.Core.Grid _grid = new(row: _rowSize, startAlive: 10);
         private static SolidColorBrush brush = Brushes.Black;
         private static double cellSize = 0;
@@ -39,7 +39,7 @@ namespace GameOfLifeWPF.Pages
 
             var timer = new System.Windows.Threading.DispatcherTimer()
             {
-                Interval = new TimeSpan(0, 0, 0, 0, 10) // Milliseconds
+                Interval = new TimeSpan(0, 0, 0, 0, 50) // Milliseconds
             };
             timer.Tick += new EventHandler(Step);
             timer.Start();
@@ -118,7 +118,7 @@ namespace GameOfLifeWPF.Pages
             }
         }
 
-        private void Step(object sender, EventArgs e)
+        private void Step(object? sender, EventArgs e)
         {
             foreach (var cell in _grid.Cells)
             {

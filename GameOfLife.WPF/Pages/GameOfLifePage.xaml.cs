@@ -112,7 +112,7 @@ namespace GameOfLifeWPF.Pages
             }
         }
 
-        private void Step(object sender, EventArgs e)
+        private void Step(object? sender, EventArgs e)
         {
             foreach (var cell in _grid.Cells)
             {

@@ -9,3 +9,5 @@ GameOfLife.Core/bin
 GameOfLife.WPF/obj
 GameOfLife.WPF/bin
 BriansBrain/bin
+BriansBrain.Forms/bin
+GameOfLife.Test/bin

@@ -4,16 +4,16 @@
     {
         internal Cell(bool isAlive = false, int livingNeighbours = 0, int index = 0)
         {
-            Neighbours = new Dictionary<CellEnum, Cell?>
+            Neighbours = new Dictionary<CellEnum, Cell>
             {
-                {CellEnum.NorthWest, null},
-                {CellEnum.North, null},
-                {CellEnum.NorthEast, null},
-                {CellEnum.West, null},
-                {CellEnum.East, null},
-                {CellEnum.SouthWest, null},
-                {CellEnum.South, null},
-                {CellEnum.SouthEast, null},
+                {CellEnum.NorthWest, this},
+                {CellEnum.North, this},
+                {CellEnum.NorthEast, this},
+                {CellEnum.West, this},
+                {CellEnum.East, this},
+                {CellEnum.SouthWest, this},
+                {CellEnum.South, this},
+                {CellEnum.SouthEast, this},
             };
 
             IsAlive = isAlive;
@@ -26,7 +26,7 @@
         public bool NextStepIsAlive { get; set; }
         public bool WasChanged { get; set; }
         internal int LivingNeighbours { get; set; }
-        internal Dictionary<CellEnum, Cell?> Neighbours { get; set; }
+        internal Dictionary<CellEnum, Cell> Neighbours { get; set; }
         public int Index { get; set; }
 
         public void CheckNextStepStatus()
