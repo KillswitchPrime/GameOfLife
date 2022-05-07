@@ -4,18 +4,6 @@
     {
         internal Cell(bool isAlive = false, int livingNeighbours = 0, int index = 0)
         {
-            Neighbours = new Dictionary<CellEnum, Cell>
-            {
-                {CellEnum.NorthWest, this},
-                {CellEnum.North, this},
-                {CellEnum.NorthEast, this},
-                {CellEnum.West, this},
-                {CellEnum.East, this},
-                {CellEnum.SouthWest, this},
-                {CellEnum.South, this},
-                {CellEnum.SouthEast, this},
-            };
-
             IsAlive = isAlive;
             LivingNeighbours = livingNeighbours;
             Index = index;
@@ -26,26 +14,15 @@
         public bool NextStepIsAlive { get; set; }
         public bool WasChanged { get; set; }
         internal int LivingNeighbours { get; set; }
-        internal Dictionary<CellEnum, Cell> Neighbours { get; set; }
         public int Index { get; set; }
 
-        public void CheckNextStepStatus()
+        public void CheckNextStepStatus(int livingNeighbours)
         {
-            var numberOfLivingNeighbours = 0;
-
-            foreach (var cell in Neighbours.Values)
-            {
-                if (cell.IsAlive)
-                {
-                    numberOfLivingNeighbours++;
-                }
-            }
-
-            LivingNeighbours = numberOfLivingNeighbours;
+            LivingNeighbours = livingNeighbours;
 
             if (IsAlive)
             {
-                NextStepIsAlive = numberOfLivingNeighbours switch
+                NextStepIsAlive = livingNeighbours switch
                 {
                     >= 4 => false,
 
@@ -58,7 +35,7 @@
             }
             else if (IsAlive == false)
             {
-                NextStepIsAlive = numberOfLivingNeighbours == 3;
+                NextStepIsAlive = livingNeighbours == 3;
             }
         }
 

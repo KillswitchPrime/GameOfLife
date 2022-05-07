@@ -4,16 +4,16 @@
     {
         internal Cell(StatusEnum isAlive = StatusEnum.Dead, int livingNeighbours = 0, int index = 0)
         {
-            Neighbours = new Dictionary<CellEnum, Cell>
+            Neighbours = new Dictionary<CellEnum, StatusEnum>
             {
-                {CellEnum.NorthWest, this},
-                {CellEnum.North, this},
-                {CellEnum.NorthEast, this},
-                {CellEnum.West, this},
-                {CellEnum.East, this},
-                {CellEnum.SouthWest, this},
-                {CellEnum.South, this},
-                {CellEnum.SouthEast, this},
+                {CellEnum.NorthWest, StatusEnum.Dead},
+                {CellEnum.North, StatusEnum.Dead},
+                {CellEnum.NorthEast, StatusEnum.Dead},
+                {CellEnum.West, StatusEnum.Dead},
+                {CellEnum.East, StatusEnum.Dead},
+                {CellEnum.SouthWest, StatusEnum.Dead},
+                {CellEnum.South, StatusEnum.Dead},
+                {CellEnum.SouthEast, StatusEnum.Dead},
             };
 
             IsAlive = isAlive;
@@ -26,16 +26,16 @@
         public StatusEnum NextStepIsAlive { get; set; }
         public bool WasChanged { get; set; }
         internal int LivingNeighbours { get; set; }
-        internal Dictionary<CellEnum, Cell> Neighbours { get; set; }
+        internal Dictionary<CellEnum, StatusEnum> Neighbours { get; set; }
         public int Index { get; set; }
 
         public void CheckNextStepStatus()
         {
             var numberOfLivingNeighbours = 0;
 
-            foreach(var cell in Neighbours.Values)
+            foreach(var cellStatus in Neighbours.Values)
             {
-                if (cell.IsAlive == StatusEnum.Alive)
+                if (cellStatus == StatusEnum.Alive)
                 {
                     numberOfLivingNeighbours++;
                 }

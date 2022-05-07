@@ -19,7 +19,7 @@ namespace GameOfLife.Test
             cells.First(c => c.Index == 1).IsAlive = true;
             cells.First(c => c.Index == 2).IsAlive = true;
 
-            cells.First(c => c.Index == 4).CheckNextStepStatus();
+            cells.First(c => c.Index == 4).CheckNextStepStatus(2);
             cells.First(c => c.Index == 4).UpdateStatus();
 
             Assert.True(cells.First(c => c.Index == 4).IsAlive);
@@ -46,7 +46,7 @@ namespace GameOfLife.Test
 
             foreach (var cell in cells)
             {
-                cell.CheckNextStepStatus();
+                grid.UpdateCellsStatus();
             }
 
             foreach (var cell in cells)

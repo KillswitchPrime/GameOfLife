@@ -61,7 +61,6 @@ namespace GameOfLife.Forms
                     Y += cellSize;
                 }
 
-                cell.CheckNextStepStatus();
             }
 
             X = 0;

@@ -2,15 +2,21 @@
 {
     public class Grid
     {
+        private readonly int Size;
+        private readonly int Row;
+        public List<Cell> Cells { get; set; }
+
         public Grid(int row = 100, int startAlive = 10)
         {
             Cells = new List<Cell>();
 
-            var size = row * row;
+            Row = row;
+
+            Size = row * row;
 
             var random = new Random();
 
-            for (int i = 0; i < size; i++)
+            for (int i = 0; i < Size; i++)
             {
                 var chanceToLive = random.Next(0, 101);
 
@@ -19,165 +25,199 @@
                 Cells.Add(new Cell(isAlive: isAlive, index: i));
             }
 
-            for(int i = 0; i < size; ++i)
-            {
-                var currentCell = Cells[i];
-
-                if (i == 0) // Top left corner
-                {
-                    ChainTopLeftCorner(currentCell, size, row, i);
-                }
-                else if(i == (row - 1)) // Top right corner
-                {
-                    ChainTopRightCorner(currentCell, size, row, i);
-                }
-                else if(i == (size - row)) // Bottom left corner
-                {
-                    ChainBottomLeftCorner(currentCell, size, row, i);
-                }
-                else if(i == (size - 1)) // Bottom right corner
-                {
-                    ChainBottomRightCorner(currentCell, size, row, i);
-                }
-                else if(i > 0 && i < (row - 1)) // Top row
-                {
-                    ChainTopRow(currentCell, size, row, i);
-                }
-                else if(i > (size - row) && i < (size - 1)) // Bottom row
-                {
-                    ChainBottomRow(currentCell, size, row, i);
-                }
-                else if(i % row == 0) // Left column
-                {
-                    ChainLeftColumn(currentCell, size, row, i);
-                }
-                else if((i + 1) % row == 0) // Right column
-                {
-                    ChainRightColumn(currentCell, size, row, i);
-                }
-                else // Every non-edge cell
-                {
-                    ChainNonEdgeCell(currentCell, size, row, i);
-                }
-            }
+            UpdateCellsStatus();
         }
-
-        public List<Cell> Cells { get; set; }
 
         public void UpdateCellsStatus()
         {
             foreach(var cell in Cells)
             {
+                var i = cell.Index;
+                
+
+                if (i == 0) // Top left corner
+                {
+                    cell.CheckNextStepStatus(TopLeftCornerCheckNeighbourStatus(Size, Row, i));
+                }
+                else if (i == (Row - 1)) // Top right corner
+                {
+                    cell.CheckNextStepStatus(TopRightCornerCheckNeighbourStatus(Size, Row, i));
+                }
+                else if (i == (Size - Row)) // Bottom left corner
+                {
+                    cell.CheckNextStepStatus(BottomLeftCornerCheckNeighbourStatus(Size, Row, i));
+                }
+                else if (i == (Size - 1)) // Bottom right corner
+                {
+                    cell.CheckNextStepStatus(BottomRightCornerCheckNeighbourStatus(Size, Row, i));
+                }
+                else if (i > 0 && i < (Row - 1)) // Top row
+                {
+                    cell.CheckNextStepStatus(TopRowCheckNeighbourStatus(Size, Row, i));
+                }
+                else if (i > (Size - Row) && i < (Size - 1)) // Bottom row
+                {
+                    cell.CheckNextStepStatus(BottomRowCheckNeighbourStatus(Row, i));
+                }
+                else if (i % Row == 0) // Left column
+                {
+                    cell.CheckNextStepStatus(LeftColumnCheckNeighbourStatus(Row, i));
+                }
+                else if ((i + 1) % Row == 0) // Right column
+                {
+                    cell.CheckNextStepStatus(RightColumnCheckNeighbourStatus(Row, i));
+                }
+                else // Every non-edge cell
+                {
+                    cell.CheckNextStepStatus(NonEdgeCellCheckNeighbourStatus(Row, i));
+                }
+
                 cell.UpdateStatus();
             }
         }
 
-        private void ChainTopLeftCorner(Cell currentCell, int size, int row, int i)
+        private int TopLeftCornerCheckNeighbourStatus(int size, int row, int i)
         {
-            currentCell.Neighbours[CellEnum.NorthWest] = Cells[size - 1];
-            currentCell.Neighbours[CellEnum.North] = Cells[size - row];
-            currentCell.Neighbours[CellEnum.NorthEast] = Cells[size - row + 1];
-            currentCell.Neighbours[CellEnum.West] = Cells[row - 1];
-            currentCell.Neighbours[CellEnum.East] = Cells[i + 1];
-            currentCell.Neighbours[CellEnum.SouthWest] = Cells[(row * 2) - 1];
-            currentCell.Neighbours[CellEnum.South] = Cells[row];
-            currentCell.Neighbours[CellEnum.SouthEast] = Cells[row + 1];
+            var livingNeighbours = 0;
+
+            livingNeighbours += Cells[size - 1].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[size - row].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[size - row + 1].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[row - 1].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[i + 1].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[(row * 2) - 1].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[row].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[row + 1].IsAlive ? 1 : 0;
+
+            return livingNeighbours;
         }
 
-        private void ChainTopRightCorner(Cell currentCell, int size, int row, int i)
+        private int TopRightCornerCheckNeighbourStatus(int size, int row, int i)
         {
-            currentCell.Neighbours[CellEnum.NorthWest] = Cells[size - 2];
-            currentCell.Neighbours[CellEnum.North] = Cells[size - 1];
-            currentCell.Neighbours[CellEnum.NorthEast] = Cells[size - row];
-            currentCell.Neighbours[CellEnum.West] = Cells[i - 1];
-            currentCell.Neighbours[CellEnum.East] = Cells[0];
-            currentCell.Neighbours[CellEnum.SouthWest] = Cells[(row * 2) - 2];
-            currentCell.Neighbours[CellEnum.South] = Cells[(row * 2) - 1];
-            currentCell.Neighbours[CellEnum.SouthEast] = Cells[row];
+            var livingNeighbours = 0;
+
+            livingNeighbours += Cells[size - 2].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[size - 1].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[size - row].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[i - 1].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[0].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[(row * 2) - 2].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[(row * 2) - 1].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[row].IsAlive ? 1 : 0;
+
+            return livingNeighbours;
         }
 
-        private void ChainBottomLeftCorner(Cell currentCell, int size, int row, int i)
+        private int BottomLeftCornerCheckNeighbourStatus(int size, int row, int i)
         {
-            currentCell.Neighbours[CellEnum.NorthWest] = Cells[size - row - 1];
-            currentCell.Neighbours[CellEnum.North] = Cells[size - (row * 2)];
-            currentCell.Neighbours[CellEnum.NorthEast] = Cells[size - (row * 2) + 1];
-            currentCell.Neighbours[CellEnum.West] = Cells[size - 1];
-            currentCell.Neighbours[CellEnum.East] = Cells[i + 1];
-            currentCell.Neighbours[CellEnum.SouthWest] = Cells[row - 1];
-            currentCell.Neighbours[CellEnum.South] = Cells[0];
-            currentCell.Neighbours[CellEnum.SouthEast] = Cells[1];
+            var livingNeighbours = 0;
+
+            livingNeighbours += Cells[size - row - 1].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[size - (row * 2)].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[size - (row * 2) + 1].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[size - 1].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[i + 1].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[row - 1].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[0].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[1].IsAlive ? 1 : 0;
+
+            return livingNeighbours;
         }
 
-        private void ChainBottomRightCorner(Cell currentCell, int size, int row, int i)
+        private int BottomRightCornerCheckNeighbourStatus(int size, int row, int i)
         {
-            currentCell.Neighbours[CellEnum.NorthWest] = Cells[size - row - 2];
-            currentCell.Neighbours[CellEnum.North] = Cells[size - row - 1];
-            currentCell.Neighbours[CellEnum.NorthEast] = Cells[size - (row * 2)];
-            currentCell.Neighbours[CellEnum.West] = Cells[i - 1];
-            currentCell.Neighbours[CellEnum.East] = Cells[size - row];
-            currentCell.Neighbours[CellEnum.SouthWest] = Cells[row - 2];
-            currentCell.Neighbours[CellEnum.South] = Cells[row - 1];
-            currentCell.Neighbours[CellEnum.SouthEast] = Cells[0];
+            var livingNeighbours = 0;
+
+            livingNeighbours += Cells[size - row - 2].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[size - row - 1].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[size - (row * 2)].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[i - 1].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[size - row].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[row - 2].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[row - 1].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[0].IsAlive ? 1 : 0;
+
+            return livingNeighbours;
         }
 
-        private void ChainTopRow(Cell currentCell, int size, int row, int i)
+        private int TopRowCheckNeighbourStatus(int size, int row, int i)
         {
-            currentCell.Neighbours[CellEnum.NorthWest] = Cells[size - row + (i - 1)];
-            currentCell.Neighbours[CellEnum.North] = Cells[size - row + i];
-            currentCell.Neighbours[CellEnum.NorthEast] = Cells[size - row + (i + 1)];
-            currentCell.Neighbours[CellEnum.West] = Cells[i - 1];
-            currentCell.Neighbours[CellEnum.East] = Cells[i + 1];
-            currentCell.Neighbours[CellEnum.SouthWest] = Cells[row + (i - 1)];
-            currentCell.Neighbours[CellEnum.South] = Cells[row + i];
-            currentCell.Neighbours[CellEnum.SouthEast] = Cells[row + (i + 1)];
+            var livingNeighbours = 0;
+
+            livingNeighbours += Cells[size - row + (i - 1)].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[size - row + i].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[size - row + (i + 1)].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[i - 1].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[i + 1].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[row + (i - 1)].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[row + i].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[row + (i + 1)].IsAlive ? 1 : 0;
+
+            return livingNeighbours;
         }
 
-        private void ChainBottomRow(Cell currentCell, int size, int row, int i)
+        private int BottomRowCheckNeighbourStatus(int row, int i)
         {
-            currentCell.Neighbours[CellEnum.NorthWest] = Cells[i - row - 1];
-            currentCell.Neighbours[CellEnum.North] = Cells[i - row];
-            currentCell.Neighbours[CellEnum.NorthEast] = Cells[i - row + 1];
-            currentCell.Neighbours[CellEnum.West] = Cells[i - 1];
-            currentCell.Neighbours[CellEnum.East] = Cells[i + 1];
-            currentCell.Neighbours[CellEnum.SouthWest] = Cells[i - (row * (row - 1)) - 1];
-            currentCell.Neighbours[CellEnum.South] = Cells[i - (row * (row - 1))];
-            currentCell.Neighbours[CellEnum.SouthEast] = Cells[i - (row * (row - 1)) + 1];
+            var livingNeighbours = 0;
+
+            livingNeighbours += Cells[i - row - 1].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[i - row].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[i - row + 1].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[i - 1].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[i + 1].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[i - (row * (row - 1)) - 1].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[i - (row * (row - 1))].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[i - (row * (row - 1)) + 1].IsAlive ? 1 : 0;
+
+            return livingNeighbours;
         }
 
-        private void ChainLeftColumn(Cell currentCell, int size, int row, int i)
+        private int LeftColumnCheckNeighbourStatus(int row, int i)
         {
-            currentCell.Neighbours[CellEnum.NorthWest] = Cells[i - 1];
-            currentCell.Neighbours[CellEnum.North] = Cells[i - row];
-            currentCell.Neighbours[CellEnum.NorthEast] = Cells[i - row + 1];
-            currentCell.Neighbours[CellEnum.West] = Cells[i + (row - 1)];
-            currentCell.Neighbours[CellEnum.East] = Cells[i + 1];
-            currentCell.Neighbours[CellEnum.SouthWest] = Cells[i + (row * 2) - 1];
-            currentCell.Neighbours[CellEnum.South] = Cells[i + row];
-            currentCell.Neighbours[CellEnum.SouthEast] = Cells[i + row + 1];
+            var livingNeighbours = 0;
+
+            livingNeighbours += Cells[i - 1].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[i - row].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[i - row + 1].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[i + (row - 1)].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[i + 1].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[i + (row * 2) - 1].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[i + row].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[i + row + 1].IsAlive ? 1 : 0;
+
+            return livingNeighbours;
         }
 
-        private void ChainRightColumn(Cell currentCell, int size, int row, int i)
+        private int RightColumnCheckNeighbourStatus(int row, int i)
         {
-            currentCell.Neighbours[CellEnum.NorthWest] = Cells[i - row - 1];
-            currentCell.Neighbours[CellEnum.North] = Cells[i - row];
-            currentCell.Neighbours[CellEnum.NorthEast] = Cells[i - (row * 2) + 1];
-            currentCell.Neighbours[CellEnum.West] = Cells[i - 1];
-            currentCell.Neighbours[CellEnum.East] = Cells[i - row + 1];
-            currentCell.Neighbours[CellEnum.SouthWest] = Cells[i + row - 1];
-            currentCell.Neighbours[CellEnum.South] = Cells[i + row];
-            currentCell.Neighbours[CellEnum.SouthEast] = Cells[i + 1];
+            var livingNeighbours = 0;
+
+            livingNeighbours += Cells[i - row - 1].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[i - row].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[i - (row * 2) + 1].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[i - 1].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[i - row + 1].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[i + row - 1].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[i + row].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[i + 1].IsAlive ? 1 : 0;
+
+            return livingNeighbours;
         }
 
-        private void ChainNonEdgeCell(Cell currentCell, int size, int row, int i)
+        private int NonEdgeCellCheckNeighbourStatus(int row, int i)
         {
-            currentCell.Neighbours[CellEnum.NorthWest] = Cells[i - row - 1];
-            currentCell.Neighbours[CellEnum.North] = Cells[i - row];
-            currentCell.Neighbours[CellEnum.NorthEast] = Cells[i - row + 1];
-            currentCell.Neighbours[CellEnum.West] = Cells[i - 1];
-            currentCell.Neighbours[CellEnum.East] = Cells[i + 1];
-            currentCell.Neighbours[CellEnum.SouthWest] = Cells[i + row - 1];
-            currentCell.Neighbours[CellEnum.South] = Cells[i + row];
-            currentCell.Neighbours[CellEnum.SouthEast] = Cells[i + row + 1];
+            var livingNeighbours = 0;
+
+            livingNeighbours += Cells[i - row - 1].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[i - row].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[i - row + 1].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[i - 1].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[i + 1].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[i + row - 1].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[i + row].IsAlive ? 1 : 0;
+            livingNeighbours += Cells[i + row + 1].IsAlive ? 1 : 0;
+
+            return livingNeighbours;
         }
     }
 }

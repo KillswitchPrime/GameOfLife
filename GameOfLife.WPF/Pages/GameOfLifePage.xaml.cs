@@ -123,7 +123,6 @@ namespace GameOfLifeWPF.Pages
                     cellBrushes[cell.Index].BrushColor = brush;
                 }
 
-                cell.CheckNextStepStatus();
             }
 
             _grid.UpdateCellsStatus();
