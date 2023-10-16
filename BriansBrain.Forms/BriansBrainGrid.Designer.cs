@@ -34,7 +34,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1200, 1200);
+            this.ClientSize = new System.Drawing.Size(1600, 800);
             this.Name = "BriansBrainGrid";
             this.Text = "Brians Brain";
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.BriansBrainGrid_Paint);

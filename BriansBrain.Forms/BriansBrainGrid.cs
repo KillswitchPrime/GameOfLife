@@ -9,14 +9,15 @@ namespace BriansBrain.Forms
             InitializeComponent();
             var timer = new System.Windows.Forms.Timer
             {
-                Interval = 10 // Milliseconds
+                Interval = 50 // Milliseconds
             };
             timer.Tick += new EventHandler(Step);
             timer.Start();
         }
 
-        private static readonly int _rowSize = 60;
-        private static readonly Grid _grid = new (row: _rowSize, startAlive: 80);
+        private static readonly int _rowSize = 150;
+        private static readonly SimpleGrid _grid = new(row: _rowSize, startAlive: 10);
+        private static readonly StatusEnum[] newValues = new StatusEnum[_grid.Size];
         private static Brush brush = Brushes.Gray;
         private static int cellSize = 0;
 
@@ -28,14 +29,18 @@ namespace BriansBrain.Forms
             using var graphics = e.Graphics;
             graphics.Clear(Color.Gray);
 
-            cellSize = Height / _rowSize;
+            cellSize = Height / _rowSize * 90 / 100;
 
-            for (int i = 0; i < _rowSize; i++)
+            for (int i = 0; i <= _grid.Column; i++)
             {
                 var currentPoint = i * cellSize;
 
+                // Vertical
                 graphics.DrawLine(Pens.Black, new Point(currentPoint, 0), new Point(currentPoint, Height));
-                graphics.DrawLine(Pens.Black, new Point(0, currentPoint), new Point(Width, currentPoint));
+
+                // Horizontal
+                if (i <= _rowSize)
+                    graphics.DrawLine(Pens.Black, new Point(0, currentPoint), new Point(Width, currentPoint));
             }
 
             graphics.Dispose();
@@ -44,16 +49,26 @@ namespace BriansBrain.Forms
         private void Step(object? sender, EventArgs e)
         {
             var graphics = CreateGraphics();
+            X = 0;
+            Y = 0;
 
-            foreach (var cell in _grid.Cells)
+            for (var i = 0; i < _grid.Size; i++)
             {
-                if (cell.WasChanged)
+                newValues[i] = _grid.UpdateCellStatus(i);
+            }
+
+            for (var i = 0; i < _grid.Size; i++)
+            {
+                var wasAlive = _grid.Cells[i];
+                var isAlive = newValues[i];
+
+                if (isAlive != wasAlive)
                 {
-                    brush = cell.IsAlive switch
+                    brush = isAlive switch
                     {
-                        StatusEnum.Dead => Brushes.Gray,
                         StatusEnum.Alive => Brushes.Coral,
                         StatusEnum.Dying => Brushes.Aquamarine,
+                        StatusEnum.Dead => Brushes.Gray,
                         _ => Brushes.Gray
                     };
 
@@ -61,19 +76,15 @@ namespace BriansBrain.Forms
                 }
 
                 X += cellSize;
-                if (X >= (_rowSize * cellSize))
+                if (X >= (_grid.Column * cellSize))
                 {
                     X = 0;
                     Y += cellSize;
                 }
-
-                cell.CheckNextStepStatus();
             }
 
-            X = 0;
-            Y = 0;
+            newValues.AsSpan().CopyTo(_grid.Cells);
 
-            _grid.UpdateCellsStatus();
             graphics.Dispose();
         }
     }
