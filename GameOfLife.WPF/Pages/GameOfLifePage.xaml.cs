@@ -1,12 +1,13 @@
-﻿using GameOfLifeWPF.Classes;
+﻿using GameOfLife.Core;
+using GameOfLifeWPF.Classes;
 using System;
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using Rectangle = System.Windows.Shapes.Rectangle;
 
 namespace GameOfLifeWPF.Pages
 {
@@ -21,11 +22,12 @@ namespace GameOfLifeWPF.Pages
             Loaded += GameOfLifePage_Loaded;
         }
 
-        private static readonly int _rowSize = 200;
-        private static readonly GameOfLife.Core.Grid _grid = new(row: _rowSize, startAlive: 10);
-        private static SolidColorBrush brush = Brushes.Black;
+        private static readonly int _rowSize = 100;
+        private static readonly SimpleGrid _grid = new(row: _rowSize, startAlive: 10);
+        private bool[] newValues = new bool[_grid.Size];
         private static double cellSize = 0;
-        private static readonly List<CellBrushesBinding> cellBrushes = new();
+        private static readonly Binding[] brushBindings = new Binding[2];
+        private static readonly Rectangle[] rectangles = new Rectangle[_grid.Size];
 
         private static double X = 0;
         private static double Y = 0;
@@ -35,11 +37,21 @@ namespace GameOfLifeWPF.Pages
             cellSize = ActualHeight / _rowSize;
 
             GameOfLifeGrid();
+
+            brushBindings[0] = new Binding("BrushColor")
+            {
+                Source = new CellBrushesBinding(Brushes.Gold)
+            };
+            brushBindings[1] = new Binding("BrushColor")
+            {
+                Source = new CellBrushesBinding(Brushes.Gray)
+            };
+
             DrawCells();
 
             var timer = new DispatcherTimer()
             {
-                Interval = new TimeSpan(0, 0, 0, 0, 10) // Milliseconds
+                Interval = new TimeSpan(0, 0, 0, 0, 50) // Milliseconds
             };
             timer.Tick += new EventHandler(Step);
             timer.Start();
@@ -47,14 +59,13 @@ namespace GameOfLifeWPF.Pages
 
         private void GameOfLifeGrid()
         {
-            for (int i = 0; i < _rowSize; i++)
+            for (int i = 0; i <= _grid.Column; i++)
             {
                 var currentPoint = i * cellSize;
 
-
                 Line horizontalLine = new()
                 {
-                    Stroke = brush,
+                    Stroke = Brushes.Black,
                     StrokeThickness = 1,
                     X1 = currentPoint,
                     X2 = currentPoint,
@@ -63,48 +74,41 @@ namespace GameOfLifeWPF.Pages
                 };
                 Canvas.Children.Add(horizontalLine);
 
-                Line verticalLine = new()
+                if (i <= _rowSize)
                 {
-                    Stroke = brush,
-                    StrokeThickness = 1,
-                    X1 = 0,
-                    X2 = ActualWidth,
-                    Y1 = currentPoint,
-                    Y2 = currentPoint,
-                };
-                Canvas.Children.Add(verticalLine);
+                    Line verticalLine = new()
+                    {
+                        Stroke = Brushes.Black,
+                        StrokeThickness = 1,
+                        X1 = 0,
+                        X2 = ActualWidth,
+                        Y1 = currentPoint,
+                        Y2 = currentPoint,
+                    };
+                    Canvas.Children.Add(verticalLine);
+                }
             }
         }
 
         private void DrawCells()
         {
-            foreach (var cell in _grid.Cells)
+            for(var i = 0; i < _grid.Size; i++)
             {
-                brush = cell.IsAlive ? Brushes.Gold : Brushes.Gray;
-
                 Rectangle rectangle = new()
                 {
                     Height = cellSize - 2,
                     Width = cellSize - 2,
-                    Fill = brush
+                    Fill = _grid.Cells[i] ? Brushes.Gold : Brushes.Gray
                 };
 
+                rectangles[i] = rectangle;
                 Canvas.Children.Add(rectangle);
                 Canvas.SetTop(rectangle, Y + 1);
                 Canvas.SetLeft(rectangle, X + 1);
-
-                // Binding color property;
-                var cellBrushBinding = new CellBrushesBinding(brush);
-                cellBrushes.Add(cellBrushBinding);
-
-                var binding = new Binding("BrushColor")
-                {
-                    Source = cellBrushBinding
-                };
-                rectangle.SetBinding(Shape.FillProperty, binding);
+                rectangle.SetBinding(Shape.FillProperty, brushBindings[_grid.Cells[i] ? 0 : 1]);
 
                 X += cellSize;
-                if (X >= (_rowSize * cellSize))
+                if (X >= (_grid.Column * cellSize))
                 {
                     X = 0;
                     Y += cellSize;
@@ -114,19 +118,23 @@ namespace GameOfLifeWPF.Pages
 
         private void Step(object? sender, EventArgs e)
         {
-            foreach (var cell in _grid.Cells)
+            for(var i = 0; i < _grid.Size; i++)
             {
-                if (cell.WasChanged)
-                {
-                    brush = cell.IsAlive ? Brushes.Gold : Brushes.Gray;
-
-                    cellBrushes[cell.Index].BrushColor = brush;
-                }
-
-                cell.CheckNextStepStatus();
+                newValues[i] = _grid.UpdateCellStatus(i);
             }
 
-            _grid.UpdateCellsStatus();
+            for (var i = 0; i < _grid.Size; i++)
+            {
+                var wasAlive = _grid.Cells[i];
+                var isAlive = newValues[i];
+
+                if (isAlive != wasAlive)
+                {
+                    rectangles[i].SetBinding(Shape.FillProperty, brushBindings[isAlive ? 0 : 1]);
+                }
+            }
+
+            newValues.AsSpan().CopyTo(_grid.Cells);
         }
     }
 }

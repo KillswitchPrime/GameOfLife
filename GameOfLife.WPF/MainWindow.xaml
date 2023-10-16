@@ -5,5 +5,5 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GameOfLife.WPF"
         mc:Ignorable="d"
-        Title="Main Window" Height="1269" Width="1216" Source="Pages/StartPage.xaml">
+        Title="Main Window" Height="800" Width="1480" Source="Pages/StartPage.xaml">
 </NavigationWindow>
